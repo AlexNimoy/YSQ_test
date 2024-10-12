@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "vue": "^3.5.10"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.8",
+    "vitest": "^2.1.2",
     "vue-tsc": "^2.1.6"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
