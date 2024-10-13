@@ -7,6 +7,7 @@ const routes = [
   { path: '/', component: Home },
   { path: '/test', component: Test },
   { path: '/result', component: Result },
+  { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
 const router = createRouter({
