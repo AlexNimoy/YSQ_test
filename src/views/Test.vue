@@ -5,6 +5,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Questionnaire from '../pages/Questionnaire.vue'
 </script>
