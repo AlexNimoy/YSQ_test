@@ -10,10 +10,11 @@ const mockLocalStorage = {
 
 describe('LocalStorageService', () => {
   let service
+  const defaultData = { default: 'value' }
 
   beforeEach(() => {
     vi.clearAllMocks()
-    service = new LocalStorageService('testKey', mockLocalStorage)
+    service = new LocalStorageService('testKey', defaultData, mockLocalStorage)
   })
 
   it('сохраняет данные в localStorage', () => {
@@ -43,9 +44,9 @@ describe('LocalStorageService', () => {
     expect(mockLocalStorage.getItem).toHaveBeenCalledWith('testKey')
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
       'testKey',
-      JSON.stringify({})
+      JSON.stringify(defaultData)
     )
-    expect(result).toEqual({})
+    expect(result).toEqual(defaultData)
   })
 
   it('удаляет данные из localStorage', () => {

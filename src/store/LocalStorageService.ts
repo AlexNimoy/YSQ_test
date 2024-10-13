@@ -1,38 +1,65 @@
+/**
+ * LocalStorageService class provides an interface for interacting with the browser's localStorage.
+ * It allows saving, loading, and removing data, as well as clearing all data in localStorage.
+ */
+
 class LocalStorageService {
   private key: string
   private storage: Storage
+  private defaultData: any
 
-  // Инициализация класса с ключом и localStorage по умолчанию
-  constructor(key: string, storage: Storage = localStorage) {
+  /**
+   * Initializes the class with a specified key, default data, and storage (defaults to localStorage).
+   * @param key - The key under which data will be stored.
+   * @param defaultData - The default data to use when no data is found in localStorage.
+   * @param storage - Optional storage mechanism (defaults to localStorage).
+   */
+  constructor(
+    key: string,
+    defaultData: any = {},
+    storage: Storage = localStorage
+  ) {
     this.key = key
     this.storage = storage
+    this.defaultData = defaultData
   }
 
-  // Метод для сохранения данных в localStorage
+  /**
+   * Saves data to localStorage under the specified key.
+   * @param value - The data to save.
+   */
   save(value: any): void {
     this.storage.setItem(this.key, JSON.stringify(value))
   }
 
-  // Метод для загрузки данных из localStorage
+  /**
+   * Loads data from localStorage by the specified key.
+   * If no data exists, initializes with the default object and saves it.
+   * @returns {any} - The loaded data or default object.
+   */
   load(): any {
     let data = this.storage.getItem(this.key)
 
-    // Если данных нет, создаем объект по умолчанию и сохраняем его
+    // If no data exists, create a default object and save it
     if (!data) {
-      const defaultData = {}
-      this.storage.setItem(this.key, JSON.stringify(defaultData))
-      return defaultData
+      this.storage.setItem(this.key, JSON.stringify(this.defaultData))
+      return this.defaultData
     }
 
     return JSON.parse(data)
   }
 
-  // Метод для удаления данных из localStorage
+  /**
+   * Removes data from localStorage by the specified key.
+   */
   remove(): void {
     this.storage.removeItem(this.key)
   }
 
-  // Статический метод для очистки всего localStorage
+  /**
+   * Clears all data from the provided storage (defaults to localStorage).
+   * @param storage - Optional storage mechanism (defaults to localStorage).
+   */
   static clear(storage: Storage = localStorage): void {
     storage.clear()
   }
