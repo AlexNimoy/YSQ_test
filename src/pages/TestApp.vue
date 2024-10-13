@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Chart />
     <Results :schemas="schemas" :userAnswers="userAnswers" />
     <div class="questions">
       <div v-for="question in questions" :key="question.id">
@@ -23,6 +24,7 @@ import answers_list from '../data/answers.json'
 import schemas from '../data/schemas.json'
 import Answers from '../components/test/Answers.vue'
 import Results from '../components/test/Results.vue'
+import Chart from '../components/test/Chart.vue'
 
 const userAnswers = ref([])
 </script>
