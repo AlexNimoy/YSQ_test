@@ -1,8 +1,8 @@
 /**
  * LocalStorageService class provides an interface for interacting with the browser's localStorage.
- * It allows saving, loading, and removing data, as well as clearing all data in localStorage.
+ * It allows saving, loading, removing data, and checking if the stored data is equal to defaultData.
+ * It also provides a static method to clear all data from localStorage.
  */
-
 class LocalStorageService {
   private key: string
   private storage: Storage
@@ -47,6 +47,15 @@ class LocalStorageService {
     }
 
     return JSON.parse(data)
+  }
+
+  /**
+   * Checks if the stored data is equal to the default data.
+   * @returns {boolean} - True if the stored data is equal to defaultData, otherwise false.
+   */
+  is_empty(): boolean {
+    const data = this.load()
+    return JSON.stringify(data) === JSON.stringify(this.defaultData)
   }
 
   /**

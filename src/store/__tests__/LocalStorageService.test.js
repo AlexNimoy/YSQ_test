@@ -17,7 +17,7 @@ describe('LocalStorageService', () => {
     service = new LocalStorageService('testKey', defaultData, mockLocalStorage)
   })
 
-  it('сохраняет данные в localStorage', () => {
+  it('saves data to localStorage', () => {
     const value = { test: 'data' }
     service.save(value)
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
@@ -26,7 +26,7 @@ describe('LocalStorageService', () => {
     )
   })
 
-  it('загружает данные из localStorage', () => {
+  it('loads data from localStorage', () => {
     const storedValue = { test: 'data' }
     mockLocalStorage.getItem.mockReturnValueOnce(JSON.stringify(storedValue))
 
@@ -36,7 +36,7 @@ describe('LocalStorageService', () => {
     expect(result).toEqual(storedValue)
   })
 
-  it('возвращает и сохраняет объект по умолчанию, если данных нет', () => {
+  it('returns and saves default data if no data is found in localStorage', () => {
     mockLocalStorage.getItem.mockReturnValueOnce(null)
 
     const result = service.load()
@@ -49,12 +49,31 @@ describe('LocalStorageService', () => {
     expect(result).toEqual(defaultData)
   })
 
-  it('удаляет данные из localStorage', () => {
+  it('checks if the stored data is equal to defaultData', () => {
+    mockLocalStorage.getItem.mockReturnValueOnce(JSON.stringify(defaultData))
+
+    const result = service.is_empty()
+
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('testKey')
+    expect(result).toBe(true)
+  })
+
+  it('returns false if the stored data is not equal to defaultData', () => {
+    const storedValue = { test: 'data' }
+    mockLocalStorage.getItem.mockReturnValueOnce(JSON.stringify(storedValue))
+
+    const result = service.is_empty()
+
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('testKey')
+    expect(result).toBe(false)
+  })
+
+  it('removes data from localStorage', () => {
     service.remove()
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('testKey')
   })
 
-  it('очищает весь localStorage через статический метод', () => {
+  it('clears all data from localStorage using the static method', () => {
     LocalStorageService.clear(mockLocalStorage)
     expect(mockLocalStorage.clear).toHaveBeenCalled()
   })
