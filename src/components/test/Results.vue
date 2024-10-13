@@ -25,25 +25,18 @@
   </table>
 </template>
 
-<script setup>
-import { ref, watchEffect } from 'vue'
-import Score from './Score.js'
+<script setup lang="ts">
+import { computed } from 'vue'
+import Score from './Score'
+import { UserAnswer, Schema } from './types'
 
-const props = defineProps({
-  schemas: {
-    type: Array,
-    required: true,
-  },
-  userAnswers: {
-    type: Array,
-    default: () => [],
-  },
-})
+const props = defineProps<{
+  schemas: Schema[]
+  userAnswers: UserAnswer[]
+}>()
 
-const resultsData = ref([])
-
-watchEffect(() => {
+const resultsData = computed(() => {
   const score = new Score(props.schemas, props.userAnswers)
-  resultsData.value = score.calculate()
+  return score.calculate()
 })
 </script>

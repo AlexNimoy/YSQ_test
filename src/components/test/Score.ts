@@ -1,7 +1,17 @@
+import { UserAnswer, Schema } from './types'
+
 /**
  * Class representing the result of answer calculations for a specific schema.
  */
 export class AnswerSummary {
+  id: number
+  name: string
+  scores: number[]
+  sumOfScores: number
+  percentageExpression: string
+  sumOfSpecificScores: number
+  percentageSpecificScores: string
+
   /**
    * Creates an instance of AnswerSummary.
    * @param {number} id - The schema's identifier.
@@ -13,13 +23,13 @@ export class AnswerSummary {
    * @param {string} percentageSpecificScores - Percentage of 5s and 6s (Σ3).
    */
   constructor(
-    id,
-    name,
-    scores,
-    sumOfScores,
-    percentageExpression,
-    sumOfSpecificScores,
-    percentageSpecificScores
+    id: number,
+    name: string,
+    scores: number[],
+    sumOfScores: number,
+    percentageExpression: string,
+    sumOfSpecificScores: number,
+    percentageSpecificScores: string
   ) {
     this.id = id
     this.name = name
@@ -35,12 +45,15 @@ export class AnswerSummary {
  * Class for calculating survey results based on early maladaptive schemas.
  */
 class Score {
+  schemas: Schema[]
+  userAnswers: UserAnswer[]
+
   /**
    * Creates an instance of Score.
-   * @param {Object[]} schemas - An array of schemas.
-   * @param {Object[]} userAnswers - An array of user answers.
+   * @param {Schema[]} schemas - An array of schemas.
+   * @param {UserAnswer[]} userAnswers - An array of user answers.
    */
-  constructor(schemas, userAnswers) {
+  constructor(schemas: Schema[], userAnswers: UserAnswer[]) {
     this.schemas = schemas
     this.userAnswers = userAnswers
   }
@@ -48,9 +61,9 @@ class Score {
   /**
    * Filters user answers by schema identifier.
    * @param {number} schemaId - The schema's identifier.
-   * @returns {Object[]} - An array of answers for the given schema.
+   * @returns {UserAnswer[]} - An array of answers for the given schema.
    */
-  getFilteredAnswers(schemaId) {
+  getFilteredAnswers(schemaId: number): UserAnswer[] {
     return this.userAnswers.filter((answer) => answer.schema_id === schemaId)
   }
 
@@ -59,7 +72,7 @@ class Score {
    * @param {number} schemaId - The schema's identifier.
    * @returns {number} - Sum of scores for the five questions.
    */
-  getSumOfScores(schemaId) {
+  getSumOfScores(schemaId: number): number {
     return this.getFilteredAnswers(schemaId).reduce(
       (sum, answer) => sum + answer.answer_score,
       0
@@ -72,7 +85,7 @@ class Score {
    * @param {number} schemaId - The schema's identifier.
    * @returns {string} - Schema expression in percentage.
    */
-  getPercentageExpression(schemaId) {
+  getPercentageExpression(schemaId: number): string {
     return (((this.getSumOfScores(schemaId) - 5) / 25) * 100).toFixed(2)
   }
 
@@ -81,7 +94,7 @@ class Score {
    * @param {number} schemaId - The schema's identifier.
    * @returns {number} - Sum of scores with values 5 and 6.
    */
-  getSumOfSpecificScores(schemaId) {
+  getSumOfSpecificScores(schemaId: number): number {
     return this.getFilteredAnswers(schemaId)
       .filter(
         (answer) => answer.answer_score === 5 || answer.answer_score === 6
@@ -95,7 +108,7 @@ class Score {
    * @param {number} schemaId - The schema's identifier.
    * @returns {string} - Percentage of answers with scores 5 and 6.
    */
-  getPercentageSpecificScores(schemaId) {
+  getPercentageSpecificScores(schemaId: number): string {
     return (
       (this.getFilteredAnswers(schemaId).filter(
         (answer) => answer.answer_score === 5 || answer.answer_score === 6
@@ -109,7 +122,7 @@ class Score {
    * Calculates results for all schemas and returns an array of AnswerSummary objects.
    * @returns {AnswerSummary[]} - Array of results for all schemas.
    */
-  calculate() {
+  calculate(): AnswerSummary[] {
     return this.schemas.map(
       (schema) =>
         new AnswerSummary(
