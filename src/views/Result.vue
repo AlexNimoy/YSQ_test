@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import Chart from '../components/test/Chart.vue'
+</script>
+
 <template>
-  <h1>Result</h1>
+  <Chart />
 </template>

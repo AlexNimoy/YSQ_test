@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>Test</h1>
-    <router-link to="/result">Go to Result</router-link>
+    <Questionnaire />
+    <router-link to="/result">Просмотр результата</router-link>
   </div>
 </template>
+
+<script setup lang="ts">
+import Questionnaire from '../pages/Questionnaire.vue'
+</script>
