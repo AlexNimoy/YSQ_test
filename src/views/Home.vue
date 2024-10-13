@@ -12,6 +12,20 @@
     </p>
     <p>Выберите подходящий вариант ответа.</p>
 
-    <router-link to="/test">Начать тест</router-link>
+    <router-link to="/test">
+      {{ isTestEmpty ? 'Начать тест' : 'Продолжить тест' }}
+    </router-link>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import LocalStorageService from '../store/LocalStorageService'
+
+const isTestEmpty = ref(true)
+const storageService = new LocalStorageService('testAnswers', { answers: [] })
+
+onMounted(() => {
+  isTestEmpty.value = storageService.is_empty()
+})
+</script>
