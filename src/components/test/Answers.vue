@@ -13,7 +13,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import LocalStorageService from '../../store/LocalStorageService'
+
+const storageService = new LocalStorageService('testAnswers', { answers: [] })
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -32,7 +35,6 @@ const props = defineProps({
   },
 })
 
-// Логика выбора ответа
 const selectedAnswer = computed(() => {
   return (
     props.modelValue.find((a) => a.question_id === props.question.id)
@@ -58,6 +60,15 @@ const updateAnswer = (selectedAnswer) => {
     })
   }
 
+  storageService.save({ answers: updatedAnswers })
   emit('update:modelValue', updatedAnswers)
 }
+
+onMounted(() => {
+  const savedData = storageService.load()
+  const savedAnswers = savedData.answers || []
+  if (savedAnswers.length > 0) {
+    emit('update:modelValue', savedAnswers)
+  }
+})
 </script>
