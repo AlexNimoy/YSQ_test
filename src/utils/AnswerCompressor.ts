@@ -29,7 +29,7 @@ class AnswerCompressor {
     e: 6,
   }
 
-  // Compress answers into a string using run-length encoding
+  // Compress answers into a string using modified run-length encoding
   static compress(data: CompressedData): string {
     // Sort answers by question_id without mutating the original array
     const sortedAnswers = [...data.answers].sort(
@@ -46,7 +46,7 @@ class AnswerCompressor {
         count++
       } else {
         if (count > 0) {
-          compressed += `${prevChar}${count}`
+          compressed += count > 1 ? `${prevChar}${count}` : prevChar
         }
         prevChar = char
         count = 1
@@ -55,7 +55,7 @@ class AnswerCompressor {
 
     // Append the last sequence
     if (count > 0) {
-      compressed += `${prevChar}${count}`
+      compressed += count > 1 ? `${prevChar}${count}` : prevChar
     }
 
     return compressed
@@ -66,12 +66,12 @@ class AnswerCompressor {
     const answers: Answer[] = []
     let questionId = 1
 
-    const regex = /([a-z])(\d+)/g
+    const regex = /([a-z])(\d*)/g
     let match: RegExpExecArray | null
 
     while ((match = regex.exec(compressedString)) !== null) {
       const [, char, countStr] = match
-      const count = parseInt(countStr, 10)
+      const count = countStr ? parseInt(countStr, 10) : 1
       const answerId = this.answerMapReverse[char]
 
       for (let i = 0; i < count; i++) {
