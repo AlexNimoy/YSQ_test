@@ -47,6 +47,7 @@ const chartData = computed(() => ({
 }))
 
 const chartOptions = {
+  indexAxis: 'y',
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -72,15 +73,17 @@ const chartOptions = {
     },
   },
   scales: {
-    x: {
+    y: {
+      stacked: true,
       ticks: {
         color: '#FFFFFF',
+        autoSkip: false,
       },
       grid: {
         color: 'rgba(255, 255, 255, 0.1)',
       },
     },
-    y: {
+    x: {
       ticks: {
         color: '#FFFFFF',
       },
