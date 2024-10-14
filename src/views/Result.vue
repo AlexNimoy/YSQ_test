@@ -3,13 +3,14 @@
     v-if="sharedResultParams"
     :result="sharedResultParams"
     :schemas="schemas"
+    :viewType="viewType"
   />
   <FinalResultrs :result="testAnswers" v-else :schemas="schemas" />
   <ResultLink :result="testAnswers" />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import schemas from '../data/schemas.json'
 import LocalStorageService from '../store/LocalStorageService'
@@ -29,5 +30,9 @@ onMounted(() => {
 
   const resultParam = route.query.result
   sharedResultParams.value = resultParam
+})
+
+const viewType = computed(() => {
+  return route.query.view === 'table' ? 'table' : 'chart'
 })
 </script>

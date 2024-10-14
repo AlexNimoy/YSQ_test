@@ -1,15 +1,22 @@
 <template>
   <ResultsTable
-    v-if="userAnswers"
+    v-if="viewType == 'table' && userAnswers"
     :schemas="schemas"
     :userAnswers="userAnswers.answers"
+  />
+  <Chart
+    v-if="viewType == 'chart' && resultsData.length"
+    :result="resultsData"
   />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ResultsTable from '../components/test/ResultsTable.vue'
+import Chart from '../components/test/Chart.vue'
+
+import Score from '../components/test/Score'
 import LocalStorageService from '../store/LocalStorageService'
 import Base64Converter from '../utils/Base64Converter'
 import AnswerCompressor from '../utils/AnswerCompressor'
@@ -26,6 +33,22 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  viewType: {
+    type: String,
+    required: true,
+    validator: (value) => {
+      return ['table', 'chart'].includes(value)
+    },
+  },
+})
+
+const resultsData = computed(() => {
+  if (!userAnswers.value) return []
+
+  const score = new Score(props.schemas, userAnswers.value.answers)
+  const calculatedResults = score.calculate()
+
+  return calculatedResults
 })
 
 onMounted(() => {
