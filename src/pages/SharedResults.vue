@@ -29,10 +29,9 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  if (props.result) {
-    // Decode and decompress the result parameter
-    const decodedAnswers = converter.decode(props.result)
-    userAnswers.value = AnswerCompressor.decompress(decodedAnswers)
-  }
+  if (!props.result) return
+  // Decode and decompress the result parameter
+  const decodedAnswers = converter.decode(props.result)
+  userAnswers.value = AnswerCompressor.decompress(decodedAnswers)
 })
 </script>
