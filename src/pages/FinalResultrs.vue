@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <Chart v-if="resultsData.length" :result="resultsData" />
-  </div>
+  <Chart v-if="resultsData.length" :result="resultsData" />
 </template>
 
 <script setup>
