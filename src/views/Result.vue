@@ -1,12 +1,17 @@
 <template>
-  <SharedResults v-if="sharedResultParams" :result="sharedResultParams" />
-  <FinalResultrs :result="testAnswers" v-else />
+  <SharedResults
+    v-if="sharedResultParams"
+    :result="sharedResultParams"
+    :schemas="schemas"
+  />
+  <FinalResultrs :result="testAnswers" v-else :schemas="schemas" />
   <ResultLink :result="testAnswers" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import schemas from '../data/schemas.json'
 import LocalStorageService from '../store/LocalStorageService'
 import SharedResults from '../pages/SharedResults.vue'
 import FinalResultrs from '../pages/FinalResultrs.vue'

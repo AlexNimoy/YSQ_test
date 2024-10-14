@@ -5,8 +5,7 @@
 </template>
 
 <script setup>
-import schemas from '../../data/schemas.json'
-import { reactive } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -18,43 +17,48 @@ import {
   LinearScale,
 } from 'chart.js'
 
-// Register Chart.js components
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-// Define reactive chart data
-const chartData = reactive({
-  labels: schemas.map((item) => item.name),
+const props = defineProps({
+  result: {
+    type: Array,
+    required: true,
+  },
+})
+
+const chartData = computed(() => ({
+  labels: props.result.map((item) => item.name),
   datasets: [
     {
       label: 'Выраженность схемы %',
-      data: schemas.map(() => Math.floor(Math.random() * 51)), // Первая часть столбика
-      backgroundColor: 'rgba(153, 102, 255, 0.6)', // Светло-фиолетовый
+      data: props.result.map((item) => Number(item.percentageExpression)),
+      backgroundColor: 'rgba(153, 102, 255, 0.6)',
       borderColor: 'rgba(153, 102, 255, 1)',
       borderWidth: 1,
     },
     {
       label: 'Доля 5 и 6 %',
-      data: schemas.map(() => Math.floor(Math.random() * 51)), // Вторая часть столбика
-      backgroundColor: 'rgba(54, 162, 235, 0.6)', // Голубой
+      data: props.result.map((item) => Number(item.percentageSpecificScores)),
+      backgroundColor: 'rgba(54, 162, 235, 0.6)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1,
     },
   ],
-})
+}))
 
-// Define reactive chart options
-const chartOptions = reactive({
+const chartOptions = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       labels: {
-        color: '#FFFFFF', // Цвет текста легенды
+        color: '#FFFFFF',
       },
     },
     title: {
       display: true,
       text: 'Схемы',
-      color: '#FFFFFF', // Цвет текста заголовка
+      color: '#FFFFFF',
       font: {
         size: 18,
       },
@@ -70,22 +74,22 @@ const chartOptions = reactive({
   scales: {
     x: {
       ticks: {
-        color: '#FFFFFF', // Цвет подписей оси X
+        color: '#FFFFFF',
       },
       grid: {
-        color: 'rgba(255, 255, 255, 0.1)', // Цвет сетки оси X
+        color: 'rgba(255, 255, 255, 0.1)',
       },
     },
     y: {
       ticks: {
-        color: '#FFFFFF', // Цвет подписей оси Y
+        color: '#FFFFFF',
       },
       grid: {
-        color: 'rgba(255, 255, 255, 0.1)', // Цвет сетки оси Y
+        color: 'rgba(255, 255, 255, 0.1)',
       },
     },
   },
-})
+}
 </script>
 
 <style scoped>
@@ -93,7 +97,5 @@ const chartOptions = reactive({
   position: relative;
   width: 100%;
   height: 400px;
-  padding: 20px;
-  border-radius: 8px;
 }
 </style>

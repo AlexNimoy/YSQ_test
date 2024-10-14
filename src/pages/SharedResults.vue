@@ -11,7 +11,6 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ResultsTable from '../components/test/ResultsTable.vue'
 import LocalStorageService from '../store/LocalStorageService'
-import schemas from '../data/schemas.json'
 import Base64Converter from '../utils/Base64Converter'
 import AnswerCompressor from '../utils/AnswerCompressor'
 
@@ -21,6 +20,10 @@ const userAnswers = ref(null)
 const props = defineProps({
   result: {
     type: String,
+    required: true,
+  },
+  schemas: {
+    type: Array,
     required: true,
   },
 })
