@@ -1057,6 +1057,11 @@ signal-exit@^4.0.1:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
+simpledotcss@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/simpledotcss/-/simpledotcss-2.3.3.tgz#02d13bfa9ea5631213635ea1ad5cdee8c7d29723"
+  integrity sha512-nZsnZQK0mOxDjhG2LXAQaHBGfDHQvOIrNz8w8oACDq+wZniw9IPzbYKfTWjQy7zxaqJ89W1Yq1uhFzTz/i9kwA==
+
 source-map-js@^1.2.0, source-map-js@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.2.1.tgz#1ce5650fddd87abc099eda37dcff024c2667ae46"

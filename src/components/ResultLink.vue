@@ -1,5 +1,5 @@
 <template>
-  <a v-if="result?.answers" :href="generateLink" target="_blank"
+  <a v-if="result?.answers" :href="generateLink" target="_blank" class="button"
     >Поделиться результатом</a
   >
 </template>

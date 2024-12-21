@@ -1,6 +1,6 @@
 <template>
   <div v-for="answer in answers" :key="answer.id">
-    <label>
+    <label class="answer">
       <input
         type="radio"
         :value="answer.id"
@@ -72,3 +72,9 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped>
+.answer {
+  cursor: pointer;
+}
+</style>

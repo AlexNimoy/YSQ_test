@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="questions">
-      <div v-for="question in questions" :key="question.id">
-        <p>{{ question.question }}</p>
+      <section v-for="question in questions" :key="question.id">
+        <h3>{{ question.question }}</h3>
         <Answers
           :answers="answers_list"
           v-model="userAnswers"
           :question="question"
         />
-      </div>
+      </section>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/test">
+  <router-link to="/test" class="button">
     {{ isTestEmpty ? 'Начать тест' : 'Продолжить тест' }}
   </router-link>
 </template>
