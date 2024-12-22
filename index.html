@@ -8,6 +8,22 @@
   </head>
   <body>
     <div id="app"></div>
+
+    <!-- Костыль для GitHub Pages перенаправления на главную страницу -->
+    <script>
+      ;(function () {
+        // Проверяем, был ли перенаправлен пользователь
+        const redirectPath = sessionStorage.getItem('redirectPath')
+        if (redirectPath) {
+          // Удаляем сохраненный путь из sessionStorage
+          sessionStorage.removeItem('redirectPath')
+          // Перенаправляем на корректный путь, включая параметры запроса
+          history.replaceState(null, '', redirectPath)
+        }
+      })()
+    </script>
+
+    <!-- Подключение основного модуля -->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
