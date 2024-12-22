@@ -9,4 +9,5 @@ export default defineConfig({
     exclude: [...configDefaults.exclude],
     environment: 'jsdom',
   },
+  base: '/',
 })
