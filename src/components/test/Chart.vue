@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <Bar :options="chartOptions" :data="chartData" />
+    <Bar :options="getChartOptions(isDarkTheme)" :data="chartData" />
   </div>
 </template>
 
@@ -26,6 +26,8 @@ const props = defineProps({
   },
 })
 
+const isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+
 const chartData = computed(() => ({
   labels: props.result.map((item) => item.name),
   datasets: [
@@ -46,52 +48,57 @@ const chartData = computed(() => ({
   ],
 }))
 
-const chartOptions = {
-  indexAxis: 'y',
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      labels: {
-        color: '#FFFFFF',
+const getChartOptions = (isDarkTheme) => {
+  const mainColor = isDarkTheme ? '#FFFFFF' : '#000000'
+  const secondaryColor = isDarkTheme ? '#000000' : '#FFFFFF'
+
+  return {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: mainColor,
+        },
+      },
+      title: {
+        display: true,
+        text: 'Схемы',
+        color: mainColor,
+        font: {
+          size: 18,
+        },
+      },
+      tooltip: {
+        backgroundColor: secondaryColor,
+        titleColor: mainColor,
+        bodyColor: mainColor,
+        borderColor: mainColor,
+        borderWidth: 1,
       },
     },
-    title: {
-      display: true,
-      text: 'Схемы',
-      color: '#FFFFFF',
-      font: {
-        size: 18,
+    scales: {
+      y: {
+        stacked: true,
+        ticks: {
+          color: mainColor,
+          autoSkip: false,
+        },
+        grid: {
+          color: 'transparent',
+        },
+      },
+      x: {
+        ticks: {
+          color: mainColor,
+        },
+        grid: {
+          color: 'transparent',
+        },
       },
     },
-    tooltip: {
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      titleColor: '#FFFFFF',
-      bodyColor: '#FFFFFF',
-      borderColor: '#FFFFFF',
-      borderWidth: 1,
-    },
-  },
-  scales: {
-    y: {
-      stacked: true,
-      ticks: {
-        color: '#FFFFFF',
-        autoSkip: false,
-      },
-      grid: {
-        color: 'rgba(255, 255, 255, 0.1)',
-      },
-    },
-    x: {
-      ticks: {
-        color: '#FFFFFF',
-      },
-      grid: {
-        color: 'rgba(255, 255, 255, 0.1)',
-      },
-    },
-  },
+  }
 }
 </script>
 
